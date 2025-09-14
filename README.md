@@ -3,10 +3,10 @@
 **Assignment Notebook:** https://github.com
 
 ## Overview
-In this application, we explore a dataset from Kaggle. The original dataset contained information on 3 million used cars. The provided dataset contains information on 426K cars to ensure speed of processing. The goal is to understand what factors make a car more or less expensive. As a result of the analysis is to provide clear recommendations to your client -- a used car dealership -- as to what consumers value in a used car. 
+In this application, we explore a dataset from Kaggle. The original dataset contained information on 3 million used cars. The provided dataset contains information on 426K cars to ensure speed of processing. The goal is to understand what factors make a car more or less expensive. The result of the analysis is to provide clear recommendations to a client -- a used car dealership -- as to what consumers value in a used car. 
   
 ## CRISP-DM Framework
-To frame the task, we will refer back to a standard process in industry for data projects called CRISP-DM. This process provides a framework for working through a data problem. Your first step in this application will be to read through a brief overview of CRISP-DM [here](https://mo-pcco.s3.us-east-1.amazonaws.com/BH-PCMLAI/module_11/readings_starter.zip). 
+To frame the task, a standard process in industry for data projects called CRISP-DM is referenced. This process provides a framework for working through a data problem. A brief overview of CRISP-DM ia available [here](https://mo-pcco.s3.us-east-1.amazonaws.com/BH-PCMLAI/module_11/readings_starter.zip). 
   
 ## Business Objective
 1. Identify which of the following features to be used to predict the price of a car.
@@ -48,8 +48,10 @@ Data Assumptions and Findings:
      <img width="765" height="563" alt="image" src="https://github.com/user-attachments/assets/5e8f6cff-d9c6-4a19-a4d6-dc33025881cd" />
    - Selected Features:
      - Select key features as: 'year', 'odometer'
+  
 2. Categorical columns:  
-   - <img width="212" height="550" alt="image" src="https://github.com/user-attachments/assets/f1340de2-b5a8-48d5-a763-3eefc988bd42" />  
+   - Number of unique values for each categorical column is shown below: 
+     - <img width="212" height="550" alt="image" src="https://github.com/user-attachments/assets/f1340de2-b5a8-48d5-a763-3eefc988bd42" />  
    - Columns dropped upfront:
      - Drop 'VIN', 'model' - too many distinct values to be useful in predictions.
    - Columns dropped after EDA:
@@ -58,11 +60,11 @@ Data Assumptions and Findings:
      - Drop 'title_status' - data is dominated by a single value 'clean'.
      - Drop 'manufacturer', 'type', 'paint_colour' - these have a fair number of distinct values and are parked for future assessment.
    - Selected Features:
-     - Select key features as: 'fuel', 'condition', 'transmission', 'drive', 'cylinders' - these are the key features potential car buyers will look our for when they purchase a car.
+     - Select key features as: 'fuel', 'condition', 'transmission', 'drive', 'cylinders'.
 
 ## Data Preparation
 1. Data Cleaning
-  - All features other than the selected ones were dropped from the dataset.
+  - All features other than the selected ones were dropped from the raw data.
   - Rows were filtered based on the numeric data assumptions (on 'price', 'year', 'odometer') listed above to remove outliers. Applying the filter removes NULL values for the selected numeric features.
   - For the remaining rows, NULL values for the following selected categorical features were filled based on the below:
     - 'fuel' - fill NULL with mode value i.e 'gas', which is reasonable as this is the case for majority of the cars
@@ -73,7 +75,7 @@ Data Assumptions and Findings:
 2. Data Transformation
   - The year that the car was manufactured was replaced with the age of the car (using current year as 2025).
 
-### Cleaned Data
+**Cleaned Data**
 Statistics of the car prices in the clean dataset is shown below. This would be helpful for comparison with the Root Mean Squared Errors (RMSE) results later.  
 <img width="643" height="352" alt="image" src="https://github.com/user-attachments/assets/bf63d9ad-6451-4767-907c-85b2aa35e7ce" />
 
@@ -84,7 +86,7 @@ The following Column Transformations were applied:
 - Numeric features: Polynomial Feature
 - Categorical features: One Hot Encoding
 
-Model 1: Linear Regression
+**Model 1: Linear Regression**
 - In this simple model, the polynomial degree was varied from 1 to 3 to assess if adding the polynomial features improved the model.
 - Results: Polynomial degree 1 yielded the best results.
   - Polynomial Degree: [1, 2, 3]
@@ -92,7 +94,7 @@ Model 1: Linear Regression
   - Test RMSEs: ['9636.3801039762', '11173.0485325417', '12354.9826787391']
 - Polynomial degree 1 would be applied in subsequent models for simplicity.
 
-Model 2: Ridge Regression
+**Model 2: Ridge Regression**
 - In this L2 regularisation model, polynomial degree was kept at 1, while alpha was varied as [0.001, 0.1, 1.0, 10.0, 100.0, 1000.0] through a GridSearch. 5-fold cross validation was also used.
 - Results: Alpha = 10 yielded the best result. 
   - Ridge (GridSearch) Train RMSE: 9922.3432149006
@@ -105,7 +107,7 @@ Model 2: Ridge Regression
   - Top 3 features contributing to lower prices: 'age', 'odometer', 'fuel_gas'
 
 
-Model 3: Lasso Regression
+**Model 3: Lasso Regression**
 - In this L1 regularisation model, the same hyperparameters were used as for Ridge Regression.
 - Results: Alpha = 0.1 yielded the best result. 
   - Lasso (GridSearch) Train RMSE: 9922.3432197779
@@ -118,16 +120,16 @@ Model 3: Lasso Regression
     - Top 3 features contributing to lower prices: 'age', 'odometer', 'cylinders_4 cylinders'
 
 ## Evaluation
-Features:  
+**Features:**  
 Selected features from the raw data included 'year' (or 'age'), 'odometer', 'fuel', 'condition', 'transmission', 'drive', and 'cylinders'. Together with One-Hot Encoding of categorical features, there are a total of 23 features.
   
-Models:  
+**Models:**  
 Three models were run on the cleaned dataset:
 1. Linear Regression with polynomial features (degree: 1 to 3)
 2. L2 regularisation using Ridge Regression with polynomial degree 1, alpha varied (0.001, 0.1, 1.0, 10.0, 100.0, 1000.0), and 5 fold cross validation.
 3. L1 regularisation using Lasso Regression with polynomial degree 1, alpha varied (0.001, 0.1, 1.0, 10.0, 100.0, 1000.0), and 5 fold cross validation.
 
-Results:  
+**Results:**  
 Linear Regression (1 degree polynomial):
 - Train RMSE: 9922.3432108642
 - Test RMSE: 9636.3801039762
@@ -161,8 +163,8 @@ Please note that the model is only good for estimating car prices ranging betwee
 The prediction error based on your sample data is 9636, which is within a standard deviation (15000) of the car prices.
   
 Additionally, below are the key findings:
-- Top 3 features contributing to higher prices: Diesel cars, 4-wheel drives, 8 cylinders
-- Top 3 features contributing to lower prices: older cars, cars used for longer distances, 4 cylinders.
+- Top 3 features contributing to higher prices: diesel cars, 4-wheel drives, cars with 8 cylinders
+- Top 3 features contributing to lower prices: older cars, cars used for longer distances, cars with 4 cylinders.
   
 We can test the prediction model and continue to assess and refine it as we gather more data.
   
