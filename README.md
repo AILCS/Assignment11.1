@@ -1,6 +1,6 @@
 # Application of CRISP-DM Framework on Business Problem: What drives the price of a car?
 
-**Assignment Notebook:** [[https://github.com](https://github.com/AILCS/Assignment11.1/blob/main/prompt_II%20(final).ipynb)](https://github.com/AILCS/Assignment11.1/blob/main/prompt_II%20(final).ipynb)
+**Assignment Notebook:** https://github.com/AILCS/Assignment11.1/blob/main/prompt_II%20(final).ipynb
 
 ## Overview
 In this application, we explore a dataset from Kaggle. The original dataset contained information on 3 million used cars. The provided dataset contains information on 426K cars to ensure speed of processing. The goal is to understand what factors make a car more or less expensive. The result of the analysis is to provide clear recommendations to a client -- a used car dealership -- as to what consumers value in a used car. 
