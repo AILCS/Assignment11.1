@@ -127,17 +127,49 @@ Three models were run on the cleaned dataset:
 2. L2 regularisation using Ridge Regression with polynomial degree 1, alpha varied (0.001, 0.1, 1.0, 10.0, 100.0, 1000.0), and 5 fold cross validation.
 3. L1 regularisation using Lasso Regression with polynomial degree 1, alpha varied (0.001, 0.1, 1.0, 10.0, 100.0, 1000.0), and 5 fold cross validation.
 
-Results:
-All three models had similar results with Train RMSE = 9922.34, and a lower Test RMSE = 9636.38. The similarity of the Train and Test RMSEs showed that the models are not overfit. Ridge Regession performed the best (marginally) while Lasso Regression performed (marginally) the worst.
+Results:  
+Linear Regression (1 degree polynomial):
+- Train RMSE: 9922.3432108642
+- Test RMSE: 9636.3801039762
 
-Additionally, the RMSEs were within 1 standard deviation (15000) of the car prices of the training data. This is reasonable for a start and the models can be tweaked further to improve the prediction.
+Ridge Regression (1 degree polynomial, alpha = 10):
+- Train RMSE: 9922.3432149006
+- Test RMSE: 9636.3796371393
+
+Lasso Regression (1 degree polynomial, alpha = 0.1):
+- Train RMSE: 9922.3432197779
+- Test RMSE: 9636.3805397717
+  
+With the lowest Test RMSE, Ridge Regession performed the best (marginally) while Lasso Regression has the highest Test RMSE and performed the worst (marginally). Therefore Ridge Regression is the selected model.
+  
+Based on the selected Ridge Regression model:
+- Top 3 features contributing to higher prices: 'fuel_diesel', 'cylinders_8 cylinders', 'drive_4wd'
+- Top 3 features contributing to lower prices: 'age', 'odometer', 'fuel_gas'
+
+The similarity of the Train and Test RMSE across all models also showed that the models were not overfit. 
+
+Additionally, the RMSEs were within 1 standard deviation (15000) of the car prices of the training data. This is reasonable for a start and the model can be tweaked further to improve the prediction.
 
 
 ## Deployment
-Key findings:
-- Prediction error: 9636.38
+Dear Client,
+  
+I have identified a car price prediction model that estimates car prices using data you provided, specifically, 'price', 'year', 'odometer', 'fuel', 'condition', 'transmission', 'drive', and 'cylinders'.
+  
+Please note that the model is only good for estimating car prices ranging between 1k and 300k, cars from year 1990, and cars with less than 500k clocked on the odometer.
+  
+The prediction error based on your sample data is 9636, which is within a standard deviation (15000) of the car prices.
+  
+Additionally, below are the key findings:
 - Top 3 features contributing to higher prices: Diesel cars, 4-wheel drives, 8 cylinders
-- Top 3 features contributing to lower prices: older cars, cars used for longer distances
+- Top 3 features contributing to lower prices: older cars, cars used for longer distances, 4 cylinders.
+  
+We can test the prediction model and continue to assess and refine it as we gather more data.
+  
+Please let me know if you have questions.
+  
+Regards,  
+Chee Siong
 
 
 
